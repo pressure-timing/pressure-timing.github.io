@@ -44,21 +44,24 @@ p {
     padding: 10px 0;
 }
 
-#filter-category, #filter-food {
+
+#toc {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    margin-bottom: 15px;
-}
-
-#filter-category {
-    grid-template-columns: repeat(5, 1fr);
-}
-
-#filter-food {
     grid-template-columns: repeat(4, 1fr);
 }
 
-#filter-food a, #filter-category a {
+#toc h1 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    margin: 10px 0 10px 0;
+    padding: 0;
+}
+
+#toc h1 a {
+    display: block;
+}
+
+#toc a {
     background: #333;
     color: whitesmoke;
     font-weight: bold;
@@ -71,11 +74,6 @@ input {
     width: 150px;
     font-size: 16px;
     padding: 4px;
-}
-
-.filter {
-    font-size: 32px;
-    font-weight: bold;
 }
 
 .category-food {

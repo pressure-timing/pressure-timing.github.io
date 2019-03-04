@@ -17,10 +17,8 @@
 <body>
 <div class="home">
     <h1 id="title"><a href="/" title="InstantPot High Pressure Calculator">InstantPot High Pressure Calculator</a></h1>
-    <h1 class="filter">Category:</h1>
-    <div id="filter-category" class="list"></div>
-    <h1 class="filter">Food:</h1>
-    <div id="filter-food" class="list"></div>
+
+    <div id="toc"></div>
 
     <div id="table">
 
@@ -33,7 +31,8 @@
         <a href="https://instantpot.com/instantpot-cooking-time">InstantPot Cooking Time</a>). Additionally it needs at
         least 1 cup of water, unless you're cooking something that absorbs water.</p>
     <p>This is a personal site for me to more more easily calculate how long it will take for me to cook things in my
-        InstantPot, based on the information from the InstantPot's website.</p>
+        InstantPot, based on the information from the InstantPot's website. For things like vegetables, fruits, etc.
+        just go directly to their website - they need 0 calculations.</p>
     <p>If you somehow found this site, feel free to use it at your own discretion. I do not guarantee that the values
         calculated are accurate/safe/etc. - errors can exist from my side or whatever's been documented on InstantPot's
         website.</p>
@@ -42,86 +41,66 @@
 <script type="text/javascript">
     // all in minutes
     const table = {
-        "Vegetables": {
-            "Asparagus": {"time": "1-2"},
-            "Beans (yellow & green)": {"time": "1-2"},
-            "Broccoli (florets)": {"time": "1-2"},
-            "Brussels Sprouts": {"time": "2-3"},
-            "Butternut Squash": {"time": "4-6"},
-            "Cabbage (whole or wedges)": {"time": "2-3"},
-            "Carrots (whole or chunks)": {"time": "6-8"},
-            "Corn (on the cob)": {"time": "3-5"},
-            "Mixed Vegetables": {"time": "3-4"},
-            "Potatoes (large, whole)": {"time": "12-15"},
-            "Potatoes (small, whole)": {"time": "8-10"},
-            "Potatoes (cubed)": {"time": "3-4"},
-            "Sweet Potatoes (whole)": {"time": "12-15"},
-            "Sweet Potatoes (cubed)": {"time": "2-4"}
-        },
         "Meat & Eggs": {
             "Beef (stew)": {"time": "20", "per": 450},
+            "Beef (meat ball)": {"time": "5", "per": 450},
+            "Beef (dressed)": {"time": "20-25", "per": 450},
+            "Beef (small pieces)": {"time": "15-20", "per": 450},
             "Beef (large pieces)": {"time": "20-25", "per": 450},
             "Beef (ribs)": {"time": "20-25", "per": 450},
-            "Chicken (breasts)": {"time": "6-8", "per": 450},
+            "Beef (shanks)": {"time": "25-30", "per": 450},
+            "Beef (oxtail)": {"time": "40-50", "per": 450},
+            "Chicken (breasts, boneless)": {"time": "6-8", "per": 450},
             "Chicken (whole)": {"time": "8", "per": 450},
+            "Chicken (cut with bones)": {"time": "10-15", "per": 450},
             "Chicken (bone stock)": {"time": "40-50"},
+            "Duck (portion with bones)": {"time": "12-15", "per": 450},
+            "Duck (whole)": {"time": "10-15", "per": 450},
+            "Lamb (cubes)": {"time": "10-15", "per": 450},
+            "Lamb (stew meat)": {"time": "12-15", "per": 450},
             "Lamb (leg)": {"time": "15", "per": 450},
+            "Ham (slices)": {"time": "9-12", "per": 450},
+            "Ham (picnic shoulder)": {"time": "8", "per": 450},
+            "Pork (loin roast)": {"time": "20", "per": 450},
             "Pork (butt roast)": {"time": "15", "per": 450},
-            "Pork (baby back ribs)": {"time": "15-20", "per": 450},
+            "Pork (ribs)": {"time": "15-20", "per": 450},
+            "Pheasant": {"time": "8", "per": 450},
+            "Turkey (breast, boneless)": {"time": "7-9", "per": 450},
+            "Turkey (breast, whole)": {"time": "20-25", "per": 450},
+            "Turkey (drumsticks, leg)": {"time": "15-20", "per": 450},
+            "Veal (chops)": {"time": "5-8", "per": 450},
+            "Veal (roast)": {"time": "12", "per": 450},
+            "Quail": {"time": "8", "per": 450},
             "Eggs (large)": {"time": "5"}
         },
         "Rice & Grains": {
             "Barley (pearl)": {"time": "20-22", "ratio": "2.5"},
-            "Congee": {"time": "15-20", "ratio": "4-5"},
+            "Barley (pot)": {"time": "25-30", "ratio": "3-4"},
+            "Congee (thick)": {"time": "15-20", "ratio": "4-5"},
+            "Congee (thin)": {"time": "15-20", "ratio": "6-7"},
+            "Couscous": {"time": "2-3", "ratio": "1:2"},
+            "Corn (dried/halved)": {"time": "5-6", "ratio": "1:3"},
+            "Kamut (whole)": {"time": "10-12", "ratio": "1:2"},
             "Millet": {"time": "10-12", "ratio": "1.75"},
             "Oatmeal": {"time": "2-3", "ratio": "2"},
             "Oats (steel cut)": {"time": "3-5", "ratio": "1.5"},
-            "Porridge": {"time": "5-7", "ratio": "6-7"},
-            "Quinoa": {"time": "1", "ratio": "1.25"},
+            "Porridge (thin)": {"time": "5-7", "ratio": "6-7"},
+            "Quinoa (quick)": {"time": "1", "ratio": "1.25"},
             "Rice (Basmati)": {"time": "4", "ratio": "1"},
             "Rice (brown)": {"time": "20-22", "ratio": "1"},
             "Rice (Jasmine)": {"time": "4", "ratio": "1"},
             "Rice (white)": {"time": "4", "ratio": "1"},
-            "Rice (wild)": {"time": "20-25", "ratio": "2"}
-        },
-        "Beans & Lentils": {
-            "Dry Black Beans": {"time": "20-25"},
-            "Soaked Black Beans": {"time": "6-8"},
-            "Dry Black Eyed Peas": {"time": "14-18"},
-            "Soaked Black Eyed Peas": {"time": "4-5"},
-            "Dry Chickpeas": {"time": "35-40"},
-            "Soaked Chickpeas": {"time": "10-15"},
-            "Dry Kidney Beans (red)": {"time": "20-25"},
-            "Soaked Kidney Beans (red)": {"time": "7-8"},
-            "Dry Kidney Beans (white)": {"time": "25-30"},
-            "Soaked Kidney Beans (white)": {"time": "6-9"},
-            "Dry Lentils (green)": {"time": "8-10"},
-            "Dry Lentils (yellow)": {"time": "1-2"},
-            "Dry Lima Beans": {"time": "12-14"},
-            "Soaked Lima Beans": {"time": "6-10"},
-            "Dry Navy Beans": {"time": "20-25"},
-            "Soaked Navy Beans": {"time": "7-8"},
-            "Dry Pigeon Peas (gandules)": {"time": "25-30"},
-            "Soaked Pigeon Peas (gandules)": {"time": "6-9"},
-            "Dry Pinto Beans": {"time": "25-30"},
-            "Soaked Pinto Beans": {"time": "6-9"},
-            "Dry Soy Beans": {"time": "35-45"},
-            "Soaked Soy Beans": {"time": "18-20"}
-        },
-        "Seafood": {
-            "Fish (whole)": {"time": "4-5"},
-            "Fish (fillet)": {"time": "2-3"},
-            "Lobster": {"time": "2-3"},
-            "Mussels": {"time": "1-2"},
-            "Shrimp (or prawn)": {"time": "1-3"},
-            "Seafood Stock": {"time": "7-8"}
+            "Rice (wild)": {"time": "20-25", "ratio": "2"},
+            "Spelt berries (unsoaked)": {"time": "25-30", "ratio": "1.5"},
+            "Wheat berries (unsoaked)": {"time": "25-30", "ratio": "3"}
         }
     };
 
     function showAll() {
         let domTable = document.getElementById("table");
-        let domCategory = document.getElementById("filter-category");
-        let domFood = document.getElementById("filter-food");
+        let domToc = document.getElementById("toc");
+        // let domCategory = document.getElementById("filter-category");
+        // let domFood = document.getElementById("filter-food");
 
         for (const category in table) {
             domTable.insertAdjacentHTML('beforeend', `
@@ -131,13 +110,13 @@
                 </div>`
             );
 
-            domCategory.insertAdjacentHTML('beforeend', `
-                <a href="#category-${hashCode(category)}" class="filter-category-link">${category}</a>
+            domToc.insertAdjacentHTML('beforeend', `
+                <h1 class="category"><a href="#category-${hashCode(category)}" class="filter-category-link">${category}</a></h1>
             `);
 
 
             for (const food in table[category]) {
-                domFood.insertAdjacentHTML('beforeend', `
+                domToc.insertAdjacentHTML('beforeend', `
                     <a href="#food-${hashCode(food)}" class="filter-food-link">${food}</a>
                 `);
 
@@ -163,10 +142,6 @@
 
     function showFood(categoryKey, foodKey) {
         const food = table[categoryKey][foodKey];
-
-        if (!food.hasOwnProperty('ratio') && !food.hasOwnProperty('per')) {
-            return `${food.time} mins`;
-        }
 
         if (food.hasOwnProperty('per')) {
             return `
