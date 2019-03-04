@@ -143,6 +143,10 @@
     function showFood(categoryKey, foodKey) {
         const food = table[categoryKey][foodKey];
 
+        if (!food.hasOwnProperty('ratio') && !food.hasOwnProperty('per')) {
+            return `${food.time} mins`;
+        }
+
         if (food.hasOwnProperty('per')) {
             return `
                 <label>Grams (g)</label>
