@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #333;
+    color: whitesmoke;
+    font-size: 16px;
+}
+
+.home {
+    background: #555;
+    width: 1060px;
+    padding: 25px;
+    margin: 15px auto;
+}
+
+
+h1#title {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 5px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+a, a:visited {
+    color: goldenrod;
+    text-decoration: none;
+}
+
+a:hover {
+    color: darkgoldenrod;
+}
+
+p {
+    padding: 10px 0;
+}
+
+#filter-category, #filter-food {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 15px;
+}
+
+#filter-category {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#filter-food {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#filter-food a, #filter-category a {
+    background: #333;
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: center;
+    margin: 1px 5px;
+    padding: 10px 5px;
+}
+
+input {
+    width: 150px;
+    font-size: 16px;
+    padding: 4px;
+}
+
+.filter {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.category-food {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding: 5px 0 15px 15px;
+}
+
+.category-food:nth-child(even) {
+    background: #333;
+}
+
+.category-food:nth-child(even):target {
+    -webkit-animation: target-fade-even 1s;
+    -moz-animation: target-fade-even 1s;
+    -o-animation: target-fade-even 1s;
+    animation: target-fade-even 1s;
+}
+
+
+@-webkit-keyframes target-fade-even {
+    from { background-color: red; } /* [1] */
+    to { background-color: #333; }
+}
+
+@-moz-keyframes target-fade-even {
+    from { background-color: red; } /* [1] */
+    to { background-color: #333; }
+}
+
+@-o-keyframes target-fade-even {
+    from { background-color: red; } /* [1] */
+    to { background-color: #333; }
+}
+
+@keyframes target-fade-even {
+    from { background-color: red; } /* [1] */
+    to { background-color: #333; }
+}
+
+
+.category-food:nth-child(odd) {
+    background: #444;
+}
+
+.category-food:nth-child(odd):target {
+    -webkit-animation: target-fade-odd 1s;
+    -moz-animation: target-fade-odd 1s;
+    -o-animation: target-fade-odd 1s;
+    animation: target-fade-odd 1s;
+}
+
+@-webkit-keyframes target-fade-odd {
+    from { background-color: red; } /* [1] */
+    to { background-color: #444; }
+}
+
+@-moz-keyframes target-fade-odd {
+    from { background-color: red; } /* [1] */
+    to { background-color: #444; }
+}
+
+@-o-keyframes target-fade-odd {
+    from { background-color: red; } /* [1] */
+    to { background-color: #444; }
+}
+
+@keyframes target-fade-odd {
+    from { background-color: red; } /* [1] */
+    to { background-color: #444; }
+}
+
+
+.category-food h3 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.food-extra {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.food-extra label {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+h2 {
+    background: wheat;
+    color: black;
+    padding: 10px 15px;
+    margin-top: 30px;
+}
+
+#table {
+    margin-top: 20px;
+}
+
+label {
+    margin-bottom: 2px;
+}
+
+.note {
+    margin-top: 30px;
+    font-size: 32px;
+}

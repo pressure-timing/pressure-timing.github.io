@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title>InstantPot High Pressure Time Calculator</title>
+    <meta property="og:title" content="InstantPot High Pressure Time Calculator"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta name="description"
+          content="Helps calculate how long it will take to cook main ingredient(s) under high pressure for an InstantPot."/>
+    <meta property="og:description"
+          content="Helps calculate how long it will take to cook main ingredient(s) under high pressure for an InstantPot."/>
+</head>
+
+<body>
+<div class="home">
+    <h1 id="title"><a href="/" title="InstantPot High Pressure Calculator">InstantPot High Pressure Calculator</a></h1>
+    <h1 class="filter">Category:</h1>
+    <div id="filter-category" class="list"></div>
+    <h1 class="filter">Food:</h1>
+    <div id="filter-food" class="list"></div>
+
+    <div id="table">
+
+    </div>
+
+    <div class="note">Notes:</div>
+    <p>InstantPot ranges from 10.15 ~ 11.6 psi (ref: <a
+            href="https://instantpot.com/which-electric-pressure-cooker-operates-at-15psi/"
+            title="Which Electric Pressure Cooker Operates at 15psi?">https://instantpot.com/which-electric-pressure-cooker-operates-at-15psi/</a>,
+        <a href="https://instantpot.com/instantpot-cooking-time">InstantPot Cooking Time</a>). Additionally it needs at
+        least 1 cup of water, unless you're cooking something that absorbs water.</p>
+    <p>This is a personal site for me to more more easily calculate how long it will take for me to cook things in my
+        InstantPot, based on the information from the InstantPot's website.</p>
+    <p>If you somehow found this site, feel free to use it at your own discretion. I do not guarantee that the values
+        calculated are accurate/safe/etc. - errors can exist from my side or whatever's been documented on InstantPot's
+        website.</p>
+</div>
+
+<script type="text/javascript">
+    // all in minutes
+    const table = {
+        "Vegetables": {
+            "Asparagus": {"time": "1-2"},
+            "Beans (yellow & green)": {"time": "1-2"},
+            "Broccoli (florets)": {"time": "1-2"},
+            "Brussels Sprouts": {"time": "2-3"},
+            "Butternut Squash": {"time": "4-6"},
+            "Cabbage (whole or wedges)": {"time": "2-3"},
+            "Carrots (whole or chunks)": {"time": "6-8"},
+            "Corn (on the cob)": {"time": "3-5"},
+            "Mixed Vegetables": {"time": "3-4"},
+            "Potatoes (large, whole)": {"time": "12-15"},
+            "Potatoes (small, whole)": {"time": "8-10"},
+            "Potatoes (cubed)": {"time": "3-4"},
+            "Sweet Potatoes (whole)": {"time": "12-15"},
+            "Sweet Potatoes (cubed)": {"time": "2-4"}
+        },
+        "Meat & Eggs": {
+            "Beef (stew)": {"time": "20", "per": 450},
+            "Beef (large pieces)": {"time": "20-25", "per": 450},
+            "Beef (ribs)": {"time": "20-25", "per": 450},
+            "Chicken (breasts)": {"time": "6-8", "per": 450},
+            "Chicken (whole)": {"time": "8", "per": 450},
+            "Chicken (bone stock)": {"time": "40-50"},
+            "Lamb (leg)": {"time": "15", "per": 450},
+            "Pork (butt roast)": {"time": "15", "per": 450},
+            "Pork (baby back ribs)": {"time": "15-20", "per": 450},
+            "Eggs (large)": {"time": "5"}
+        },
+        "Rice & Grains": {
+            "Barley (pearl)": {"time": "20-22", "ratio": "2.5"},
+            "Congee": {"time": "15-20", "ratio": "4-5"},
+            "Millet": {"time": "10-12", "ratio": "1.75"},
+            "Oatmeal": {"time": "2-3", "ratio": "2"},
+            "Oats (steel cut)": {"time": "3-5", "ratio": "1.5"},
+            "Porridge": {"time": "5-7", "ratio": "6-7"},
+            "Quinoa": {"time": "1", "ratio": "1.25"},
+            "Rice (Basmati)": {"time": "4", "ratio": "1"},
+            "Rice (brown)": {"time": "20-22", "ratio": "1"},
+            "Rice (Jasmine)": {"time": "4", "ratio": "1"},
+            "Rice (white)": {"time": "4", "ratio": "1"},
+            "Rice (wild)": {"time": "20-25", "ratio": "2"}
+        },
+        "Beans & Lentils": {
+            "Dry Black Beans": {"time": "20-25"},
+            "Soaked Black Beans": {"time": "6-8"},
+            "Dry Black Eyed Peas": {"time": "14-18"},
+            "Soaked Black Eyed Peas": {"time": "4-5"},
+            "Dry Chickpeas": {"time": "35-40"},
+            "Soaked Chickpeas": {"time": "10-15"},
+            "Dry Kidney Beans (red)": {"time": "20-25"},
+            "Soaked Kidney Beans (red)": {"time": "7-8"},
+            "Dry Kidney Beans (white)": {"time": "25-30"},
+            "Soaked Kidney Beans (white)": {"time": "6-9"},
+            "Dry Lentils (green)": {"time": "8-10"},
+            "Dry Lentils (yellow)": {"time": "1-2"},
+            "Dry Lima Beans": {"time": "12-14"},
+            "Soaked Lima Beans": {"time": "6-10"},
+            "Dry Navy Beans": {"time": "20-25"},
+            "Soaked Navy Beans": {"time": "7-8"},
+            "Dry Pigeon Peas (gandules)": {"time": "25-30"},
+            "Soaked Pigeon Peas (gandules)": {"time": "6-9"},
+            "Dry Pinto Beans": {"time": "25-30"},
+            "Soaked Pinto Beans": {"time": "6-9"},
+            "Dry Soy Beans": {"time": "35-45"},
+            "Soaked Soy Beans": {"time": "18-20"}
+        },
+        "Seafood": {
+            "Fish (whole)": {"time": "4-5"},
+            "Fish (fillet)": {"time": "2-3"},
+            "Lobster": {"time": "2-3"},
+            "Mussels": {"time": "1-2"},
+            "Shrimp (or prawn)": {"time": "1-3"},
+            "Seafood Stock": {"time": "7-8"}
+        }
+    };
+
+    function showAll() {
+        let domTable = document.getElementById("table");
+        let domCategory = document.getElementById("filter-category");
+        let domFood = document.getElementById("filter-food");
+
+        for (const category in table) {
+            domTable.insertAdjacentHTML('beforeend', `
+                <div class="category" id="category-${hashCode(category)}">
+                    <h2 class="category-title">${category}</h2>
+                    ${showCategory(category)}
+                </div>`
+            );
+
+            domCategory.insertAdjacentHTML('beforeend', `
+                <a href="#category-${hashCode(category)}" class="filter-category-link">${category}</a>
+            `);
+
+
+            for (const food in table[category]) {
+                domFood.insertAdjacentHTML('beforeend', `
+                    <a href="#food-${hashCode(food)}" class="filter-food-link">${food}</a>
+                `);
+
+                let domFoodBlock = document.querySelectorAll(`div[data-food='${food}']`)[0];
+                domFoodBlock.setAttribute('id', `food-${hashCode(food)}`);
+            }
+        }
+    }
+
+    function showCategory(categoryKey) {
+        const category = table[categoryKey];
+        let str = '';
+        for (const foodKey in category) {
+            str += `
+            <div class="category-food" data-food="${foodKey}">
+                <h3>${foodKey}</h3>
+                ${showFood(categoryKey, foodKey)}
+            </div>`;
+        }
+
+        return str;
+    }
+
+    function showFood(categoryKey, foodKey) {
+        const food = table[categoryKey][foodKey];
+
+        if (!food.hasOwnProperty('ratio') && !food.hasOwnProperty('per')) {
+            return `${food.time} mins`;
+        }
+
+        if (food.hasOwnProperty('per')) {
+            return `
+                <label>Grams (g)</label>
+                <label>Ounce (oz)</label>
+                <label>Pounds (lb)</label>
+                <label>Time (m)</label>
+                <input class="input grams" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnPer(this, 'g')" />
+                <input class="input oz" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnPer(this, 'oz')" />
+                <input class="input lbs" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnPer(this, 'lb')" />
+                <input class="input time" type="text" data-category="${categoryKey}" data-food="${foodKey}" disabled />
+            `;
+        }
+
+        if (food.hasOwnProperty('ratio')) {
+            return `
+                <label>Milliliters (mL)</label>
+                <label>Cups (C)</label>
+                <label>Ounce (oz)</label>
+                <label>Time (m)</label>
+                <input class="input ml" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnRatio(this, 'ml')" />
+                <input class="input cups" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnRatio(this, 'c')" />
+                <input class="input oz" type="text" data-category="${categoryKey}" data-food="${foodKey}" oninput="updatedOnRatio(this, 'oz')" />
+                <input class="input time" type="text" data-category="${categoryKey}" data-food="${foodKey}" value="${food.time}" disabled />
+                <div class="food-extra">
+                    <label>Water</label>
+                    <input class="input ratio water ml" data-category="${categoryKey}" data-food="${foodKey}" type="text" disabled />
+                    <input class="input ratio water cups" data-category="${categoryKey}" data-food="${foodKey}" type="text" disabled />
+                    <input class="input ratio water oz" data-category="${categoryKey}" data-food="${foodKey}" type="text" disabled />
+                </div>
+            `;
+        }
+    }
+
+    const G_TO_OZ = 0.035274;
+    const OZ_TO_G = 28.3495;
+    const G_TO_LB = 0.00220462;
+    const LB_TO_G = 453.592;
+    const OZ_TO_LB = 0.0625;
+    const LB_TO_OZ = 16;
+
+    function updatedOnPer(dom, measurement) {
+        const categoryKey = dom.getAttribute('data-category');
+        const foodKey = dom.getAttribute('data-food');
+        const food = table[categoryKey][foodKey];
+
+
+        let domG = document.querySelectorAll(`input.grams[data-food='${foodKey}']`)[0];
+        let domOz = document.querySelectorAll(`input.oz[data-food='${foodKey}']`)[0];
+        let domLbs = document.querySelectorAll(`input.lbs[data-food='${foodKey}']`)[0];
+        let domTime = document.querySelectorAll(`input.time[data-food='${foodKey}']`)[0];
+
+        if (measurement === 'g') {
+            domOz.value = (parseFloat(domG.value) * G_TO_OZ).toFixed(2);
+            domLbs.value = (parseFloat(domG.value) * G_TO_LB).toFixed(2);
+        } else if (measurement === 'oz') {
+            domG.value = (parseFloat(domOz.value) * OZ_TO_G).toFixed(2);
+            domLbs.value = (parseFloat(domOz.value) * OZ_TO_LB).toFixed(2);
+        } else if (measurement === 'lb') {
+            domG.value = (parseFloat(domLbs.value) * LB_TO_G).toFixed(2);
+            domOz.value = (parseFloat(domLbs.value) * LB_TO_OZ).toFixed(2);
+        }
+
+        setDomRangeValue(domTime,domG.value, food.time, 'ceil');
+    }
+
+    const OZ_TO_CUP = 0.125;
+    const OZ_TO_ML = 29.5735;
+    const CUP_TO_OZ = 8;
+    const CUP_TO_ML = 236.588;
+    const ML_TO_OZ = 0.033814;
+    const ML_TO_CUP = 0.00422675;
+
+    function updatedOnRatio(dom, measurement) {
+        const categoryKey = dom.getAttribute('data-category');
+        const foodKey = dom.getAttribute('data-food');
+        const food = table[categoryKey][foodKey];
+
+        let domML = document.querySelectorAll(`input.ml[data-food='${foodKey}']`)[0];
+        let domC = document.querySelectorAll(`input.cups[data-food='${foodKey}']`)[0];
+        let domOz = document.querySelectorAll(`input.oz[data-food='${foodKey}']`)[0];
+        let domMLWater = document.querySelectorAll(`input.ml.water[data-food='${foodKey}']`)[0];
+        let domCWater = document.querySelectorAll(`input.cups.water[data-food='${foodKey}']`)[0];
+        let domOzWater = document.querySelectorAll(`input.oz.water[data-food='${foodKey}']`)[0];
+
+        if (measurement === 'ml') {
+            domOz.value = (parseFloat(domML.value) * ML_TO_OZ).toFixed(2);
+            domC.value = (parseFloat(domML.value) * ML_TO_CUP).toFixed(2);
+        } else if (measurement === 'c') {
+            domOz.value = (parseFloat(domC.value) * CUP_TO_OZ).toFixed(2);
+            domML.value = (parseFloat(domC.value) * CUP_TO_ML).toFixed(2);
+        } else if (measurement === 'oz') {
+            domML.value = (parseFloat(domOz.value) * OZ_TO_ML).toFixed(2);
+            domC.value = (parseFloat(domOz.value) * OZ_TO_CUP).toFixed(2);
+        }
+
+        setDomRangeValue(domMLWater, domML.value, food.ratio);
+        setDomRangeValue(domCWater, domC.value, food.ratio);
+        setDomRangeValue(domOzWater, domOz.value, food.ratio);
+    }
+
+    function setDomRangeValue(dom, baseValue, range, fixedOrCeil) {
+        const time = range.split('-').map(parseFloat);
+
+        if (fixedOrCeil === 'ceil') {
+            if (time.length < 2) {
+                dom.value = Math.ceil(parseFloat(baseValue) / time[0]);
+            } else {
+                const vals = [Math.ceil(parseFloat(baseValue) / time[0]), Math.ceil((baseValue) / time[1])];
+                dom.value = `${Math.min(vals[0], vals[1])} - ${Math.max(vals[0], vals[1])}`;
+            }
+        } else { // default
+            if (time.length < 2) {
+                dom.value = (parseFloat(baseValue) / time[0]).toFixed(2);
+            } else {
+                const vals = [(parseFloat(baseValue) / time[0]).toFixed(2), (parseFloat(baseValue) / time[1]).toFixed(2)];
+                dom.value = `${Math.min(vals[0], vals[1])} - ${Math.max(vals[0], vals[1])}`;
+            }
+        }
+    }
+
+    function hashCode(str) {
+        return str.toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')           // Replace spaces with -
+            .replace(/&/g, '-and-')         // Replace & with 'and'
+            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+            .replace(/\-\-+/g, '-');        // Replace multiple - with single -
+    }
+
+    showAll();
+</script>
+</body>
+</html>
